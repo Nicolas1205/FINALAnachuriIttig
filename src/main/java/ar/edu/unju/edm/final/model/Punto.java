@@ -9,6 +9,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.NoArgsConstructor;
 import java.util.Set;
+import ar.edu.unju.edm.Final.model.Turista;
 
 
 
@@ -21,6 +22,9 @@ public class Punto {
 		int puntoId;
 		String nombre;
 
+		@ManyToOne
+		@JoinColumn(name = "cart_id", nullable=false)
+		public Turista turista;
 		/*
 		@OneToMany(mappedBy = "punto")
 		Set<Comentario> comentarios;
