@@ -9,9 +9,9 @@
     <relativePath/> <!-- lookup parent from repository -->
   </parent>
   <groupId>ar.edu.unju.edm</groupId>
-  <artifactId>FinalAnachuriIttig</artifactId>
+  <artifactId>Final</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-  <name>FinalAnachuriIttig</name>
+  <name>Final</name>
   <description>Final Project</description>
   <properties>
     <java.version>20</java.version>
@@ -47,7 +47,16 @@
       <artifactId>spring-boot-starter-test</artifactId>
       <scope>test</scope>
     </dependency>
+    <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <version>1.18.28</version>
+      <scope>provided</scope>
+    </dependency>
   </dependencies>
+
+  
 
   <build>
     <plugins>

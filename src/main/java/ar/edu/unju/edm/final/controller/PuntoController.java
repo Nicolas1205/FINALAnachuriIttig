@@ -1,7 +1,7 @@
-package ar.edu.unju.edm.controller.final;
+package ar.edu.unju.edm.Final.controller;
 
-import ar.edu.unju.edm.final.model.Punto;
-import ar.edu.unju.edm.final.service.IPuntoService;
+import ar.edu.unju.edm.Final.model.Punto;
+import ar.edu.unju.edm.Final.service.IPuntoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,15 +15,15 @@ import java.util.Optional;
 
 @Controller
 public class PuntoController {
-		@Autowired
-		Punto punto;
+		//@Autowired
+		//Punto punto;
 		@Autowired
 		IPuntoService puntoService;
 
 		@GetMapping("/addPunto")
 		public String postPuntoDeInteres(@RequestParam("codigo") Optional<Integer> codigo, Model model) {
-				var producto = codigo.map(puntoService::getPunto).orElse(Optional.of(new Producto()));
-				model.addAttribute("producto", producto);
+				var punto = codigo.map(puntoService::getPunto).orElse(Optional.of(new Punto()));
+				model.addAttribute("punto", punto);
 				return "addPunto.html";
 		}
 		@PostMapping("/addPunto")

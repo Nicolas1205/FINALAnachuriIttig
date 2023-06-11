@@ -1,8 +1,8 @@
-package ar.edu.unju.edm.final.service.impl;
+package ar.edu.unju.edm.Final.service.impl;
 
-import ar.edu.unju.edm.tp3.model.Punto;
-import ar.edu.unju.edm.tp3.service.IPuntoService;
-import ar.edu.unju.edm.tp3.repository.PuntoRepository;
+import ar.edu.unju.edm.Final.model.Punto;
+import ar.edu.unju.edm.Final.service.IPuntoService;
+import ar.edu.unju.edm.Final.repository.PuntoRepository;
 
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,16 +17,16 @@ public class PuntoService implements IPuntoService {
 		@Autowired
 		PuntoRepository puntoRepository;
 
-		void addPunto(Punto punto) {
+		public void addPunto(Punto punto) {
 				puntoRepository.save(punto);
 		}
-		Optional<Punto> getPunto(int codigo){
+		public Optional<Punto> getPunto(int codigo){
 				return puntoRepository.findById(codigo);
 		}
-		void deletePunto(int codigo) {
+		public void deletePunto(int codigo) {
 				puntoRepository.deleteById(codigo);
 		}
-		List<Punto> getPuntos() {
+		public List<Punto> getPuntos() {
 				return puntoRepository.findAll();
 		}
 }
