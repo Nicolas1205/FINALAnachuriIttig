@@ -19,13 +19,15 @@
   <!-- MAIN -->
 
   <main class="container">
+		<div>
+			<h1 th:text="${turista.nombre}"/>
+		</div>
     <div>
       <section class="grid items">
-        <article th:each="punto: ${puntos}">
+        <article th:each="punto: ${turista.puntos}">
           <header>
             <hgroup>
               <h3 th:text="${punto.nombre}" />
-							<h3 th:text="${punto.turista.nombre}"/>
             </hgroup>
 
           </header>
@@ -55,28 +57,10 @@
     </div>
 
     <div class="controls-container">
-      <a role="button" href="/agregarProducto"> Volver a la carga </a>
+      <a role="button" href="/addTurista"> Volver a la carga </a>
       <a role="button" href="/"> Volver al Inicio </a>
     </div>
   </main>
 
-  <dialog open th:if="${producto}">
-    <article>
-      <header>
-        <a href="/puntos" aria-label="Cerrar" class="close"></a>
-        <hgroup>
-          <h3 th:text="${punto.nombre}" />
-          <p th:text="${punto.descripcion}" />
-        </hgroup>
-
-      </header>
-      <div>
-        <p class="price-container" th:text="'$ ' + ${punto.precio}" />
-        <p th:text="${punto.stock} + ' en stock'" />
-        <p th:text="${punto.marca}" />
-      </div>
-    </article>
-  </dialog>
 </body>
-
 </html>
