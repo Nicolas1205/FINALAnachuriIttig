@@ -18,17 +18,18 @@
 
   <main class="container">
     <div>
-			<h1 th:text="'Comentarios del Punto:' + ${punto.nombre}"/>
+			<h1 th:text="'Comentarios del Punto: ' + ${punto.nombre}"/>
       <section class="grid items">
         <article th:each="comentario: ${punto.comentarios}">
           <header>
             <hgroup>
 							<h1 th:text="${comentario.titulo}" />
-              <h3 th:text="${comentario.descripcion}" />
+							<h1 th:text="'comentado por ' + ${comentario.turista.nombre}"/>
             </hgroup>
           </header>
-          <div>
-          </div>
+					<footer>
+							<h1 th:text="'comentado por ' + ${comentario.turista.nombre}"/>
+					</footer>
         </article>
       </section>
     </div>

@@ -40,14 +40,13 @@ public class ComentarioController {
 		public String postComentario(@RequestParam("puntoId") Integer puntoId,
 																 @ModelAttribute("comentario") Comentario comentario) {
 				var punto = puntoService.getPunto(puntoId).orElse(new Punto());
-				var turista = turistaService.getTurista(comentario.id.turistaId).orElse(new Turista());
+				var turista = turistaService.getTurista(comentario.turista.turistaId).orElse(new Turista());
 
-				comentario.id.setPuntoId(punto.puntoId);
-				comentario.id.setTuristaId(comentario.id.turistaId);
 				comentario.setTurista(turista);
 				comentario.setPunto(punto);
 
 				punto.getComentarios().add(comentario);
+				turista.getComentarios().add(comentario);
 				comentarioService.addComentario(comentario);
 				return String.format("redirect:/comentarios?puntoId=%d", punto.puntoId);
 		}

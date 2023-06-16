@@ -16,31 +16,25 @@ import lombok.ToString;
 
 @Entity
 @Table(name="comentarios")
-@Getter @Setter @ToString
+@Getter @Setter @ToString @NoArgsConstructor
 public class Comentario {
-		@EmbeddedId
-		public ComentarioKey id;
+		@Id
+		@GeneratedValue(strategy = GenerationType.IDENTITY)	
+		public int comentarioId;
 
 		@ManyToOne
-		@MapsId("turistaId")
 		@JoinColumn(name = "turista_id")
 		public Turista turista;
 
 		@ManyToOne
-    @MapsId("puntoId")
     @JoinColumn(name = "punto_id")
     public Punto punto;
 
-		public String descripcion;
 		public String titulo;
+		public String descripcion;
 
 		public Comentario (String titulo, String descripcion) {
 				this.descripcion = descripcion;
 				this.titulo = titulo;
 		}
-		public Comentario() {
-				this.punto = new Punto();
-				this.turista = new Turista();
-		}
-		
 }
