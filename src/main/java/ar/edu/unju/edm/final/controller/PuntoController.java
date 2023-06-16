@@ -1,7 +1,11 @@
 package ar.edu.unju.edm.Final.controller;
 
 import ar.edu.unju.edm.Final.model.Punto;
+import ar.edu.unju.edm.Final.model.Turista;
+import ar.edu.unju.edm.Final.model.Valoracion;
 import ar.edu.unju.edm.Final.service.IPuntoService;
+import ar.edu.unju.edm.Final.service.ITuristaService;
+import ar.edu.unju.edm.Final.service.IValoracionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,15 +21,24 @@ import java.util.Optional;
 public class PuntoController {
 		@Autowired
 		IPuntoService puntoService;
+		@Autowired
+		IValoracionService valoracionService;
+		@Autowired
+		ITuristaService turistaService;
+	
 
 		@GetMapping("/addPunto")
-		public String postPuntoDeInteres(@RequestParam("codigo") Optional<Integer> codigo, Model model) {
+		public String getPuntoDeInteres(@RequestParam("codigo") Optional<Integer> codigo, Model model) {
 				var punto = codigo.map(puntoService::getPunto).orElse(Optional.of(new Punto()));
 				model.addAttribute("punto", punto);
 				return "addPunto.html";
 		}
+
 		@PostMapping("/addPunto")
-		public String getPuntoDeInteres(@ModelAttribute("punto") Punto punto) {
+		public String postPuntoDeInteres(@ModelAttribute("punto") Punto punto) {
+				var turista  = turistaService.getTurista(punto.turista.turistaId);
+				punto.setTurista(turista.get());
+				turista.get().getPuntos().add(punto);
 				puntoService.addPunto(punto);
 				return "redirect:/puntos";
 		}
@@ -34,6 +47,7 @@ public class PuntoController {
 		public String getPuntos(Model model) {
 				var puntos = puntoService.getPuntos();
 				model.addAttribute("puntos", puntos);
+				model.addAttribute("valoracion", new Valoracion());
 				return "puntos.html";
 		}
 
@@ -48,5 +62,19 @@ public class PuntoController {
 				var punto = puntoService.getPunto(puntoId).orElse(new Punto());
 				model.addAttribute("punto", punto);
 				return "comentarios.html";
+		}
+
+		@PostMapping("/addValoracion")
+		public String postValoracion(@RequestParam("puntoId") Integer puntoId,
+																 @ModelAttribute("valoracion") Valoracion valoracion) {
+
+				var punto = puntoService.getPunto(puntoId).orElse(new Punto());
+				var turista = turistaService.getTurista(1).orElse(new Turista());
+				valoracion.setPunto(punto);
+				valoracion.setTurista(turista);
+				valoracion.id.puntoId = punto.puntoId;
+				valoracion.id.turistaId = 1;
+				valoracionService.addValoracion(valoracion);
+				return "redirect:/puntos";
 		}
 }

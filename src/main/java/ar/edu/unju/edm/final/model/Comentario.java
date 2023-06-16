@@ -16,7 +16,7 @@ import lombok.ToString;
 
 @Entity
 @Table(name="comentarios")
-@Getter @Setter @ToString //@NoArgsConstructor
+@Getter @Setter @ToString
 public class Comentario {
 		@EmbeddedId
 		public ComentarioKey id;

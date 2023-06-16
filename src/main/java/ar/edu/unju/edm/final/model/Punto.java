@@ -16,6 +16,7 @@ import lombok.NoArgsConstructor;
 import java.util.Set;
 import java.util.List;
 import ar.edu.unju.edm.Final.model.Turista;
+import ar.edu.unju.edm.Final.model.Valoracion;
 
 
 
@@ -35,10 +36,8 @@ public class Punto {
 		@OneToMany(mappedBy = "punto")
 		public Set<Comentario> comentarios;
 
-		/*
 		@OneToMany(mappedBy = "punto")
-		Set<Valoracion> valoraciones;
-		*/
+		public Set<Valoracion> valoraciones;
 
 		public Punto(String nombre) {
 				this.nombre = nombre;

@@ -32,10 +32,8 @@ public class Turista {
 		@OneToMany(mappedBy = "turista")
 		public Set<Comentario> comentarios;
 
-		/*
 		@OneToMany(mappedBy = "turista")
-		Set<Valoracion> valoraciones;
-		*/
+		public Set<Valoracion> valoraciones;
 
 		public Turista(String nombre) {
 				this.nombre = nombre;

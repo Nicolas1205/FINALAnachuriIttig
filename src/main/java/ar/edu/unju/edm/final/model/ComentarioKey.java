@@ -18,11 +18,6 @@ import lombok.Data;
 @Embeddable
 @Data @NoArgsConstructor
 public class ComentarioKey implements Serializable {
-		/*
-		@Column(name = "comentario_id")
-		@GeneratedValue(strategy = GenerationType.IDENTITY)
-		public int comentarioId;
-		*/
 		@Column(name = "turista_id")
 		public int turistaId;
 		@Column(name = "punto_id")

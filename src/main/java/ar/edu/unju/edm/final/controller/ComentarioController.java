@@ -1,9 +1,11 @@
 package ar.edu.unju.edm.Final.controller;
 
 import ar.edu.unju.edm.Final.model.Comentario;
+import ar.edu.unju.edm.Final.model.Turista;
 import ar.edu.unju.edm.Final.model.ComentarioKey;
 import ar.edu.unju.edm.Final.service.IComentarioService;
 import ar.edu.unju.edm.Final.service.IPuntoService;
+import ar.edu.unju.edm.Final.service.ITuristaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,8 +24,9 @@ public class ComentarioController {
 		IComentarioService comentarioService;
 		@Autowired
 		IPuntoService puntoService;
-
-		
+		@Autowired
+		ITuristaService turistaService;
+	
 		@GetMapping("/addComentario")
 		public String getComentario(@RequestParam("puntoId") Integer puntoId, Model model) {
 				
@@ -31,19 +34,21 @@ public class ComentarioController {
 				var comentario = new Comentario();
 				model.addAttribute("punto", punto);
 				model.addAttribute("comentario", comentario);
-				model.addAttribute("comentarioKey", new ComentarioKey());
 				return "addComentario.html";
 		}
 		@PostMapping("/addComentario")
 		public String postComentario(@RequestParam("puntoId") Integer puntoId,
 																 @ModelAttribute("comentario") Comentario comentario) {
-
-
 				var punto = puntoService.getPunto(puntoId).orElse(new Punto());
-				comentario.punto.puntoId = punto.puntoId;
-				comentario.turista.turistaId = comentario.id.turistaId;
+				var turista = turistaService.getTurista(comentario.id.turistaId).orElse(new Turista());
+
+				comentario.id.setPuntoId(punto.puntoId);
+				comentario.id.setTuristaId(comentario.id.turistaId);
+				comentario.setTurista(turista);
+				comentario.setPunto(punto);
+
+				punto.getComentarios().add(comentario);
 				comentarioService.addComentario(comentario);
-				//punto.getComentarios().add(comentrio);
 				return String.format("redirect:/comentarios?puntoId=%d", punto.puntoId);
 		}
 		
