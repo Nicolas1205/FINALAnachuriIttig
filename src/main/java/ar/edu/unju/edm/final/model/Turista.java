@@ -21,16 +21,18 @@ public class Turista {
 		@Id
 		@GeneratedValue(strategy = GenerationType.IDENTITY)
 		@Column(name = "turista_id")
-		int turistaId;
+		public int turistaId;
 
-		String nombre;
+		public String nombre;
 
 		@OneToMany(mappedBy="turista")
 		public List<Punto> puntos;
 		
-		/*
+		
 		@OneToMany(mappedBy = "turista")
-		Set<Comentario> comentarios;
+		public Set<Comentario> comentarios;
+
+		/*
 		@OneToMany(mappedBy = "turista")
 		Set<Valoracion> valoraciones;
 		*/

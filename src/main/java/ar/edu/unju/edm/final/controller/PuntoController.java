@@ -15,8 +15,6 @@ import java.util.Optional;
 
 @Controller
 public class PuntoController {
-		//@Autowired
-		//Punto punto;
 		@Autowired
 		IPuntoService puntoService;
 
@@ -45,14 +43,10 @@ public class PuntoController {
 				return "redirect:/puntos";
 		}
 
-		/*
 		@GetMapping("/comentarios")
-		public String getComentarios(Model model) {
+		public String getComentarios(@RequestParam("puntoId") Integer puntoId, Model model) {
+				var punto = puntoService.getPunto(puntoId).orElse(new Punto());
+				model.addAttribute("punto", punto);
 				return "comentarios.html";
 		}
-		@PostMapping("/valorar")
-		public String postValoracion(Integer valoracion, Model model) {
-				return "redirect:/puntos";
-		}
-		*/
 }

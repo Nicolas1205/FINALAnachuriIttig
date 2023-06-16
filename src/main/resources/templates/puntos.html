@@ -47,6 +47,10 @@
               </form>
               <button th:form="${'form3-' + producto.codigo}"><span class="material-symbols-outlined">edit</span></button>
 							-->
+							<form th:id="${'form1-' + punto.puntoId}" th:action="@{/comentarios(puntoId=${punto.puntoId})}" method="get" style="display: none;">
+								<input name="puntoId" th:value="${punto.puntoId}">
+							</form>
+							<button th:form="${'form1-' + punto.puntoId}"><span> Comentarios </span></button>
             </div>
           </footer>
         </article>

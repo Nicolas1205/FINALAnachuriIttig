@@ -1,33 +1,46 @@
-package ar.edu.unju.edm.final.model;
+package ar.edu.unju.edm.Final.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
-import jakarta.persistence.Component;
 import jakarta.persistence.Table;
 import jakarta.persistence.Id;
+import jakarta.persistence.MapsId;
+import jakarta.persistence.EmbeddedId;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.JoinColumn;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Entity
 @Table(name="comentarios")
-@Component
-@Getter @Setter @NoArgsConstructor
+@Getter @Setter @ToString //@NoArgsConstructor
 public class Comentario {
 		@EmbeddedId
-		ComentarioKey id;
+		public ComentarioKey id;
 
 		@ManyToOne
 		@MapsId("turistaId")
-		@JoinColumns(name = "turista_id")
-		Turista turista;
+		@JoinColumn(name = "turista_id")
+		public Turista turista;
 
 		@ManyToOne
-    @MapsId("courseId")
-    @JoinColumn(name = "course_id")
-    Punto punto;
+    @MapsId("puntoId")
+    @JoinColumn(name = "punto_id")
+    public Punto punto;
 
-		String descripcion;
+		public String descripcion;
+		public String titulo;
 
-		public Comentario (String descripcion) {
+		public Comentario (String titulo, String descripcion) {
 				this.descripcion = descripcion;
+				this.titulo = titulo;
 		}
+		public Comentario() {
+				this.punto = new Punto();
+				this.turista = new Turista();
+		}
+		
 }
