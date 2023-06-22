@@ -10,32 +10,36 @@ import jakarta.persistence.Column;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.NoArgsConstructor;
+
 import java.util.Set;
 import java.util.List;
+
 import ar.edu.unju.edm.Final.model.Punto;
 
 @Entity
-@Table(name="turistas")
-@Getter @Setter @NoArgsConstructor
+@Table(name = "turistas")
+@Getter
+@Setter
+@NoArgsConstructor
 public class Turista {
-		@Id
-		@GeneratedValue(strategy = GenerationType.IDENTITY)
-		@Column(name = "turista_id")
-		public int turistaId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "turista_id")
+    public int turistaId;
 
-		public String nombre;
+    public String nombre;
 
-		@OneToMany(mappedBy="turista")
-		public List<Punto> puntos;
-		
-		
-		@OneToMany(mappedBy = "turista")
-		public List<Comentario> comentarios;
+    @OneToMany(mappedBy = "turista")
+    public List<Punto> puntos;
 
-		@OneToMany(mappedBy = "turista")
-		public Set<Valoracion> valoraciones;
 
-		public Turista(String nombre) {
-				this.nombre = nombre;
-		}
+    @OneToMany(mappedBy = "turista")
+    public List<Comentario> comentarios;
+
+    @OneToMany(mappedBy = "turista")
+    public Set<Valoracion> valoraciones;
+
+    public Turista(String nombre) {
+        this.nombre = nombre;
+    }
 }

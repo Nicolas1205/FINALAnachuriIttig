@@ -4,6 +4,7 @@ import ar.edu.unju.edm.Final.model.Valoracion;
 import ar.edu.unju.edm.Final.model.ValoracionKey;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service

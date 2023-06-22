@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -15,31 +14,32 @@ import java.util.Optional;
 
 @Controller
 public class TuristaController {
-		@Autowired
-		ITuristaService turistaService;
+    @Autowired
+    ITuristaService turistaService;
 
-		@GetMapping("/addTurista")
-		public String postTurista(@RequestParam("turista_id") Optional<Integer> codigo, Model model) {
-				var turista = codigo.map(turistaService::getTurista).orElse(Optional.of(new Turista()));
-				model.addAttribute("turista", turista);
-				return "addTurista.html";
-		}
-		@PostMapping("/addTurista")
-		public String getTurista(@ModelAttribute("turista") Turista turista) {
-				turistaService.addTurista(turista);
-				return "redirect:/puntos";
-		}
-		
-		
-		@GetMapping("/turista")
-		public String getTurista(@RequestParam("turista_id") Integer turistaId, Model model) {
-				//var turista = turistaId.map(turistaService::getTurista).orElse(Optional.of(null));
-				// TODO ERROR HANDLER Optional
-				var turista = turistaService.getTurista(turistaId).orElse(new Turista());
-				//var turista = opt_turista.get();
-				model.addAttribute("turista", turista);
-				return "turista.html";
-		}
+    @GetMapping("/addTurista")
+    public String postTurista(@RequestParam("turista_id") Optional<Integer> codigo, Model model) {
+        var turista = codigo.map(turistaService::getTurista).orElse(Optional.of(new Turista()));
+        model.addAttribute("turista", turista);
+        return "addTurista.html";
+    }
+
+    @PostMapping("/addTurista")
+    public String getTurista(@ModelAttribute("turista") Turista turista) {
+        turistaService.addTurista(turista);
+        return "redirect:/puntos";
+    }
+
+
+    @GetMapping("/turista")
+    public String getTurista(@RequestParam("turista_id") Integer turistaId, Model model) {
+        //var turista = turistaId.map(turistaService::getTurista).orElse(Optional.of(null));
+        // TODO ERROR HANDLER Optional
+        var turista = turistaService.getTurista(turistaId).orElse(new Turista());
+        //var turista = opt_turista.get();
+        model.addAttribute("turista", turista);
+        return "turista.html";
+    }
 
 		/*
 		@DeleteMapping("/deletepunto")
@@ -48,5 +48,5 @@ public class TuristaController {
 				return "redirect:/puntos";
 		}
 		*/
-		
+
 }
