@@ -29,8 +29,6 @@
             </hgroup>
 
           </header>
-          <div>
-          </div>
           <footer>
             <div role="group">
 							<form th:id="${'form1-' + punto.puntoId}" th:action="@{/comentarios(puntoId=${punto.puntoId})}" method="get" style="display: none;">
@@ -38,26 +36,18 @@
 							</form>
 							<button th:form="${'form1-' + punto.puntoId}"><span> Comentarios </span></button>
             </div>
-						<form th:object="${valoracion}" th:action="@{addValoracion(puntoId=${punto.puntoId})}" method="post">
-							<div class="rate">
-								<input type="radio" id="star5" name="rate" th:value="5" th:field="*{rating}" />
-								<label for="star5" title="text">5 stars</label>
 
-								<input type="radio" id="star4" name="rate" th:value="4" th:field="*{rating}" />
-								<label for="star4" title="text">4 stars</label>
+						<div th:if="${punto.getUserRating(1)}" th:text="${punto.getUserRating(1)}"/>
 
-								<input type="radio" id="star3" name="rate" th:value="3" th:field="*{rating}" />
-								<label for="star3" title="text">3 stars</label>
+						<div th:unless="${punto.getUserRating(1)}">
+							<form th:object="${valoracion}" th:action="@{addValoracion(puntoId=${punto.puntoId})}" method="post">
+								<input type="text" name="rate" th:field="*{rating}" />
+								<label for="rate"> </label>
+								<button> Rate </button> 
+							</form>
+						</div>
 
-								<input type="radio" id="star2" name="rate" th:value="2" th:field="*{rating}" />
-								<label for="star2" title="text">2 stars</label>
-
-								<input type="radio" id="star1" name="rate" th:value="1" th:field="*{rating}" />
-								<label for="star1" title="text">1 star</label>
-							</div>
-							<button <span> Rating </span> </button>
-						</form>
-          </footer>
+					</footer>
         </article>
       </section>
 

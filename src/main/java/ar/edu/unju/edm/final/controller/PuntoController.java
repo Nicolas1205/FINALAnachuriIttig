@@ -46,6 +46,8 @@ public class PuntoController {
 		@GetMapping("/puntos")
 		public String getPuntos(Model model) {
 				var puntos = puntoService.getPuntos();
+				var turista = turistaService.getTurista(1).orElse(new Turista()); // Just experimental
+				model.addAttribute("turista", turista);
 				model.addAttribute("puntos", puntos);
 				model.addAttribute("valoracion", new Valoracion());
 				return "puntos.html";

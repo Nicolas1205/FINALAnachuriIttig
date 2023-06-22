@@ -18,7 +18,8 @@ import java.util.List;
 import ar.edu.unju.edm.Final.model.Turista;
 import ar.edu.unju.edm.Final.model.Valoracion;
 
-
+import ar.edu.unju.edm.Final.service.IPuntoService;
+import ar.edu.unju.edm.Final.repository.PuntoRepository;
 
 @Entity
 @Table(name="puntos")
@@ -34,12 +35,21 @@ public class Punto {
 		public Turista turista;
 
 		@OneToMany(mappedBy = "punto")
-		public Set<Comentario> comentarios;
+		public List<Comentario> comentarios;
 
 		@OneToMany(mappedBy = "punto")
-		public Set<Valoracion> valoraciones;
+		public List<Valoracion> valoraciones;
 
 		public Punto(String nombre) {
 				this.nombre = nombre;
+		}
+
+		public Integer getUserRating(Integer turistaId) {
+				for(Valoracion v : valoraciones) {
+						if(v.id.turistaId == turistaId) {
+								return v.rating;
+						}
+				}
+				return null;
 		}
 }

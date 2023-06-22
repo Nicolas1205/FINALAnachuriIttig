@@ -30,7 +30,7 @@ public class Turista {
 		
 		
 		@OneToMany(mappedBy = "turista")
-		public Set<Comentario> comentarios;
+		public List<Comentario> comentarios;
 
 		@OneToMany(mappedBy = "turista")
 		public Set<Valoracion> valoraciones;
