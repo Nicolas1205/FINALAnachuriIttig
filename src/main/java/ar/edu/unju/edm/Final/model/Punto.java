@@ -45,11 +45,8 @@ public class Punto {
 		}
 
 		public Integer getUserRating(Integer turistaId) {
-				for(Valoracion v : valoraciones) {
-						if(v.id.turistaId == turistaId) {
-								return v.rating;
-						}
-				}
-				return null;
+			return
+					valoraciones.stream().filter(valoracion -> valoracion.getTurista().getTuristaId() == turistaId)
+							.map(Valoracion::getRating).findFirst().orElse(null);
 		}
 }
