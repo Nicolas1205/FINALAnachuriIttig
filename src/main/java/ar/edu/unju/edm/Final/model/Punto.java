@@ -45,6 +45,7 @@ public class Punto {
     }
 
     public Integer getUserRating(Integer turistaId) {
+        System.out.println(turistaId);
         return
                 valoraciones.stream().filter(valoracion -> valoracion.getTurista().getTuristaId() == turistaId)
                         .map(Valoracion::getRating).findFirst().orElse(null);

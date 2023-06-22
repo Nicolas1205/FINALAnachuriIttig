@@ -38,7 +38,7 @@ public class ComentarioController {
     public String postComentario(@RequestParam("puntoId") Integer puntoId,
                                  @ModelAttribute("comentario") Comentario comentario) {
         var punto = puntoService.getPunto(puntoId).orElse(new Punto());
-        var turista = turistaService.getTurista(comentario.turista.turistaId).orElse(new Turista());
+        var turista = turistaService.getTurista(comentario.turista.getTuristaId()).orElse(new Turista());
 
         comentario.setTurista(turista);
         comentario.setPunto(punto);

@@ -1,5 +1,6 @@
 package ar.edu.unju.edm.Final.controller;
 
+import ar.edu.unju.edm.Final.TuristaDetails;
 import ar.edu.unju.edm.Final.model.Punto;
 import ar.edu.unju.edm.Final.model.Turista;
 import ar.edu.unju.edm.Final.model.Valoracion;
@@ -7,6 +8,7 @@ import ar.edu.unju.edm.Final.service.IPuntoService;
 import ar.edu.unju.edm.Final.service.ITuristaService;
 import ar.edu.unju.edm.Final.service.IValoracionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.security.Principal;
 import java.util.Optional;
 
 @Controller
@@ -36,7 +39,7 @@ public class PuntoController {
 
     @PostMapping("/addPunto")
     public String postPuntoDeInteres(@ModelAttribute("punto") Punto punto) {
-        var turista = turistaService.getTurista(punto.turista.turistaId);
+        var turista = turistaService.getTurista(punto.turista.getTuristaId());
         punto.setTurista(turista.get());
         turista.get().getPuntos().add(punto);
         puntoService.addPunto(punto);
@@ -44,9 +47,10 @@ public class PuntoController {
     }
 
     @GetMapping("/puntos")
-    public String getPuntos(Model model) {
+    public String getPuntos(Model model, @AuthenticationPrincipal TuristaDetails userDetails) {
         var puntos = puntoService.getPuntos();
-        var turista = turistaService.getTurista(1).orElse(new Turista()); // Just experimental
+        var turista = Optional.ofNullable(userDetails.getTurista()).orElse(new Turista());
+        System.out.println(turista);
         model.addAttribute("turista", turista);
         model.addAttribute("puntos", puntos);
         model.addAttribute("valoracion", new Valoracion());

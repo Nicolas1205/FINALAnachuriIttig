@@ -37,9 +37,9 @@
 							<button th:form="${'form1-' + punto.puntoId}"><span> Comentarios </span></button>
             </div>
 
-						<div th:if="${punto.getUserRating(1)}" th:text="${punto.getUserRating(1)}"/>
+						<div th:if="${punto.getUserRating(turista.getTuristaId())}" th:text="${punto.getUserRating(turista.getTuristaId())}"/>
 
-						<div th:unless="${punto.getUserRating(1)}">
+						<div th:unless="${punto.getUserRating(turista.getTuristaId())}">
 							<form th:object="${valoracion}" th:action="@{addValoracion(puntoId=${punto.puntoId})}" method="post">
 								<input type="text" name="rate" th:field="*{rating}" />
 								<label for="rate"> </label>

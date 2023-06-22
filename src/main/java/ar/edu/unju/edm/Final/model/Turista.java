@@ -15,6 +15,7 @@ import java.util.Set;
 import java.util.List;
 
 import ar.edu.unju.edm.Final.model.Punto;
+import lombok.ToString;
 
 @Entity
 @Table(name = "turistas")
@@ -25,19 +26,25 @@ public class Turista {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "turista_id")
-    public int turistaId;
+    private int turistaId;
 
-    public String nombre;
+    private String nombre;
+
+    private String password;
+
+    private String rol;
+
+    private boolean estado;
 
     @OneToMany(mappedBy = "turista")
-    public List<Punto> puntos;
+    private List<Punto> puntos;
 
 
     @OneToMany(mappedBy = "turista")
-    public List<Comentario> comentarios;
+    private List<Comentario> comentarios;
 
     @OneToMany(mappedBy = "turista")
-    public Set<Valoracion> valoraciones;
+    private Set<Valoracion> valoraciones;
 
     public Turista(String nombre) {
         this.nombre = nombre;
