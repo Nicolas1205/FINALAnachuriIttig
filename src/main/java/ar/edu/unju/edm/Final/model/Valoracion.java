@@ -30,7 +30,7 @@ public class Valoracion {
     @JoinColumn(name = "punto_id")
     public Punto punto;
 
-    @Size(min=0, max=5, message = "debe ser entre 0 y 5")
+    @Size(min = 0, max = 5, message = "debe ser entre 0 y 5")
     @NotNull(message = "debe especificar un rating")
     public Integer rating;
 

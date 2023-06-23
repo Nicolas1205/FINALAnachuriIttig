@@ -25,7 +25,7 @@ public class Punto {
     private int puntoId;
 
     @NotNull(message = "debe especificar un nombre")
-    @Size(min=1, max=50, message = "debe tener entre 1 y 50 caracteres")
+    @Size(min = 1, max = 50, message = "debe tener entre 1 y 50 caracteres")
     private String nombre;
     private String descripcion;
 
@@ -44,7 +44,7 @@ public class Punto {
     @OneToMany(mappedBy = "punto")
     private List<Valoracion> valoraciones;
 
-    public Punto(String nombre) {
+    public Punto(@NotNull String nombre) {
         this.nombre = nombre;
     }
 

@@ -16,7 +16,6 @@ import java.util.Set;
 import java.util.List;
 
 import ar.edu.unju.edm.Final.model.Punto;
-import lombok.ToString;
 
 @Entity
 @Table(name = "turistas")
@@ -64,7 +63,7 @@ public class Turista {
     @OneToMany(mappedBy = "turista")
     private Set<Valoracion> valoraciones;
 
-    public Turista(String nombre) {
+    public Turista(@NotNull String nombre) {
         this.nombre = nombre;
     }
 }

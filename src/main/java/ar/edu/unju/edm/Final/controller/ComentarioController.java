@@ -2,7 +2,6 @@ package ar.edu.unju.edm.Final.controller;
 
 import ar.edu.unju.edm.Final.TuristaDetails;
 import ar.edu.unju.edm.Final.model.Comentario;
-import ar.edu.unju.edm.Final.model.Turista;
 import ar.edu.unju.edm.Final.service.IComentarioService;
 import ar.edu.unju.edm.Final.service.IPuntoService;
 import ar.edu.unju.edm.Final.service.ITuristaService;
@@ -14,7 +13,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import ar.edu.unju.edm.Final.model.Punto;

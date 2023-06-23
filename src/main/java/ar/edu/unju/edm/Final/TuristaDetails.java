@@ -11,7 +11,7 @@ import java.util.List;
 
 @Getter
 public class TuristaDetails implements UserDetails {
-    private Turista turista;
+    private final Turista turista;
 
     public TuristaDetails(Turista turista) {
         this.turista = turista;
