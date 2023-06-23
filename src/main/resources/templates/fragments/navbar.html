@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <title>Navbar</title>
+    <link rel="stylesheet" href="../../static/css/pico.min.css" th:href="@{/css/pico.min.css}" />
+    <link rel="stylesheet" href="../../static/css/global.css" th:href="@{/css/global.css}">
+</head>
+<body>
+<nav th:fragment="navbar" class="container-fluid">
+    <ul>
+        <li>
+            <a href="../index.html" th:href="@{/}" class="contrast"><strong>Turismo</strong></a>
+        </li>
+        <li>
+            <a
+                    href="../puntos.html"
+                    th:href="@{/puntos}"
+                    class="secondary"
+            >
+                Puntos
+            </a>
+        </li>
+        <li sec:authorize="hasAuthority('ADMIN')">
+            <a
+                    href="../addTurista.html"
+                    th:href="@{/addTurista}"
+                    class="secondary"
+            >
+                Crear turista
+            </a>
+        </li>
+    </ul>
+    <ul sec:authorize="isAuthenticated()">
+        <li sec:authentication="name">Nombre de usuario</li>
+        <li>
+            <a
+                href="../login.html"
+                th:href="@{/logout}"
+            >
+                Logout
+            </a>
+        </li>
+    </ul>
+</nav>
+</body>
+</html>
