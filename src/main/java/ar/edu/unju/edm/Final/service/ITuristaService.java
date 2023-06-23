@@ -15,4 +15,6 @@ public interface ITuristaService {
     void deleteTurista(int codigo);
 
     List<Turista> getTurista();
+
+    Optional<Turista> findTuristaByNombre(String nombre);
 }

@@ -11,13 +11,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.security.Principal;
+import java.util.Base64;
+import java.util.Objects;
 import java.util.Optional;
 
 @Controller
@@ -31,17 +35,26 @@ public class PuntoController {
 
 
     @GetMapping("/addPunto")
-    public String getPuntoDeInteres(@RequestParam("codigo") Optional<Integer> codigo, Model model) {
-        var punto = codigo.map(puntoService::getPunto).orElse(Optional.of(new Punto()));
+    public String getPuntoDeInteres(@RequestParam("codigo") Optional<Integer> codigo, Model model, @AuthenticationPrincipal TuristaDetails details) {
+        Objects.requireNonNull(details);
+        var punto = codigo.flatMap(puntoService::getPunto).orElse(new Punto());
+        var turista = turistaService.getTurista(details.getTurista().getTuristaId()).orElseThrow();
+        punto.setTurista(turista);
+        turista.getPuntos().add(punto);
         model.addAttribute("punto", punto);
         return "addPunto.html";
     }
 
-    @PostMapping("/addPunto")
-    public String postPuntoDeInteres(@ModelAttribute("punto") Punto punto) {
-        var turista = turistaService.getTurista(punto.turista.getTuristaId());
-        punto.setTurista(turista.get());
-        turista.get().getPuntos().add(punto);
+    @PostMapping(value = "/addPunto", consumes = "multipart/form-data")
+    public String postPuntoDeInteres(@ModelAttribute("punto") Punto punto, @RequestParam("file") MultipartFile[] archivo, Model model) {
+        try {
+            byte[] contenido = archivo[0].getBytes();
+            String base64 = Base64.getEncoder().encodeToString(contenido);
+            punto.setImagenUrl("data," + archivo[0].getContentType() + ";base64," + base64);
+        } catch (Exception e) {
+            model.addAttribute("subirHabitacionErrorMessage", e.getMessage());
+        }
+
         puntoService.addPunto(punto);
         return "redirect:/puntos";
     }
@@ -50,7 +63,7 @@ public class PuntoController {
     public String getPuntos(Model model, @AuthenticationPrincipal TuristaDetails userDetails) {
         var puntos = puntoService.getPuntos();
         var turista = Optional.ofNullable(userDetails.getTurista()).orElse(new Turista());
-        System.out.println(turista);
+        System.out.println(userDetails.getAuthorities());
         model.addAttribute("turista", turista);
         model.addAttribute("puntos", puntos);
         model.addAttribute("valoracion", new Valoracion());
@@ -72,14 +85,13 @@ public class PuntoController {
 
     @PostMapping("/addValoracion")
     public String postValoracion(@RequestParam("puntoId") Integer puntoId,
-                                 @ModelAttribute("valoracion") Valoracion valoracion) {
+                                 @ModelAttribute("valoracion") Valoracion valoracion,
+                                 @AuthenticationPrincipal TuristaDetails details) {
 
         var punto = puntoService.getPunto(puntoId).orElse(new Punto());
-        var turista = turistaService.getTurista(1).orElse(new Turista());
+        var turista = turistaService.getTurista(details.getTurista().getTuristaId()).orElseThrow();
         valoracion.setPunto(punto);
         valoracion.setTurista(turista);
-        valoracion.id.puntoId = punto.puntoId;
-        valoracion.id.turistaId = 1;
         valoracionService.addValoracion(valoracion);
         return "redirect:/puntos";
     }

@@ -2,62 +2,72 @@
 <html lang="es" xmlns:th="https://www.thymeleaf.org" data-theme="dark">
 
 <head>
-  <title>Puntos</title>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2.0.0-alpha1/css/pico.min.css" />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"/>
-  <link rel="stylesheet" href="../static/css/global.css" th:href="@{/css/global.css}">
-  <link rel="stylesheet" href="../static/css/punto.css" th:href="@{/css/punto.css}"/> 
+    <title>Puntos</title>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2.0.0-alpha1/css/pico.min.css"/>
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"/>
+    <link rel="stylesheet" href="../static/css/global.css" th:href="@{/css/global.css}">
+    <link rel="stylesheet" href="../static/css/punto.css" th:href="@{/css/punto.css}"/>
 </head>
-
 
 
 <body>
 
-  <!-- <div th:replace="~{fragments/navbar :: navbar}"></div> -->
-  <!-- MAIN -->
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+<!-- MAIN -->
 
-  <main class="container">
+<main class="container">
     <div>
-      <section class="grid items">
-        <article th:each="punto: ${puntos}">
-          <header>
-            <hgroup>
-              <h3 th:text="${punto.nombre}" />
-							<h3 th:text="${punto.turista.nombre}"/>
-            </hgroup>
+        <section class="grid items">
+            <article th:each="punto: ${puntos}">
+                <header>
+                    <hgroup>
+                        <h3 th:text="${punto.nombre}"/>
+                        <h3 th:text="${punto.turista.nombre}"/>
+                    </hgroup>
 
-          </header>
-          <footer>
-            <div role="group">
-							<form th:id="${'form1-' + punto.puntoId}" th:action="@{/comentarios(puntoId=${punto.puntoId})}" method="get" style="display: none;">
-								<input name="puntoId" th:value="${punto.puntoId}">
-							</form>
-							<button th:form="${'form1-' + punto.puntoId}"><span> Comentarios </span></button>
-            </div>
+                    <img th:src="${punto.imagenUrl}" th:alt="${punto.nombre}" alt="Imagen punto">
 
-						<div th:if="${punto.getUserRating(turista.getTuristaId())}" th:text="${punto.getUserRating(turista.getTuristaId())}"/>
+                </header>
 
-						<div th:unless="${punto.getUserRating(turista.getTuristaId())}">
-							<form th:object="${valoracion}" th:action="@{addValoracion(puntoId=${punto.puntoId})}" method="post">
-								<input type="text" name="rate" th:field="*{rating}" />
-								<label for="rate"> </label>
-								<button> Rate </button> 
-							</form>
-						</div>
+                <p th:text="${punto.descripcion}">
+                    Descripción
+                </p>
 
-					</footer>
-        </article>
-      </section>
+                <footer>
+                    <div role="group">
+                        <form th:id="${'form1-' + punto.puntoId}" th:action="@{/comentarios(puntoId=${punto.puntoId})}"
+                              method="get" style="display: none;">
+                            <input name="puntoId" th:value="${punto.puntoId}">
+                        </form>
+                        <button th:form="${'form1-' + punto.puntoId}"><span> Comentarios </span></button>
+                    </div>
+
+                    <div th:if="${punto.getUserRating(turista.getTuristaId())}"
+                         th:text="${punto.getUserRating(turista.getTuristaId())}"/>
+
+                    <div th:unless="${punto.getUserRating(turista.getTuristaId())}">
+                        <form th:object="${valoracion}" th:action="@{addValoracion(puntoId=${punto.puntoId})}"
+                              method="post">
+                            <input type="text" name="rate" th:field="*{rating}"/>
+                            <label for="rate"> </label>
+                            <button> Rate</button>
+                        </form>
+                    </div>
+
+                </footer>
+            </article>
+        </section>
 
     </div>
 
     <div class="controls-container">
-      <a role="button" href="/agregarProducto"> Volver a la carga </a>
-      <a role="button" href="/"> Volver al Inicio </a>
+        <a role="button" href="/addPunto">Cargar puntos</a>
+        <a role="button" href="/"> Volver al Inicio </a>
     </div>
-  </main>
+</main>
 
 </body>
 

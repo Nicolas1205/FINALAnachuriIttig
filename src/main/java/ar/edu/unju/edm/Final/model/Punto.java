@@ -1,13 +1,6 @@
 package ar.edu.unju.edm.Final.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Table;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.ToString;
 import lombok.Setter;
@@ -27,18 +20,23 @@ import ar.edu.unju.edm.Final.model.Valoracion;
 public class Punto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public int puntoId;
-    public String nombre;
+    private int puntoId;
+    private String nombre;
+    private String descripcion;
+
+    @Lob
+    @Column(columnDefinition = "TEXT")
+    private String imagenUrl;
 
     @ManyToOne
     @JoinColumn(name = "turista_id")//, nullable=false)
-    public Turista turista;
+    private Turista turista;
 
     @OneToMany(mappedBy = "punto")
-    public List<Comentario> comentarios;
+    private List<Comentario> comentarios;
 
     @OneToMany(mappedBy = "punto")
-    public List<Valoracion> valoraciones;
+    private List<Valoracion> valoraciones;
 
     public Punto(String nombre) {
         this.nombre = nombre;

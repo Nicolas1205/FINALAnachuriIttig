@@ -3,6 +3,7 @@ package ar.edu.unju.edm.Final.controller;
 import ar.edu.unju.edm.Final.model.Turista;
 import ar.edu.unju.edm.Final.service.ITuristaService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,7 +27,20 @@ public class TuristaController {
 
     @PostMapping("/addTurista")
     public String getTurista(@ModelAttribute("turista") Turista turista) {
-        turistaService.addTurista(turista);
+        System.out.println(turista);
+        var bcrypt = new BCryptPasswordEncoder();
+        var fTurista = turistaService.findTuristaByNombre(turista.getNombre());
+        if (fTurista.isPresent()) {
+            var fTuristaUnwrapped = fTurista.get();
+            fTuristaUnwrapped.setPassword(bcrypt.encode(turista.getPassword()));
+            fTuristaUnwrapped.setRol(turista.getRol());
+            fTuristaUnwrapped.setEstado(true);
+            turistaService.addTurista(fTuristaUnwrapped);
+        } else {
+            turista.setPassword(bcrypt.encode(turista.getPassword()));
+            turista.setEstado(true);
+            turistaService.addTurista(turista);
+        }
         return "redirect:/puntos";
     }
 

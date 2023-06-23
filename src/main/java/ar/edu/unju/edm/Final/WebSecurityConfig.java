@@ -26,7 +26,7 @@ public class WebSecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests((requests) -> requests
                         .requestMatchers("/", "/login").permitAll()
-                        .requestMatchers("/css/**").permitAll()
+                        .requestMatchers("/css/**", "/fonts/**").permitAll()
                         .requestMatchers("/addTurista").hasAuthority("ADMIN")
                         .anyRequest().authenticated()
                 ).formLogin((form) -> form

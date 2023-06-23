@@ -31,4 +31,9 @@ public class TuristaService implements ITuristaService {
     public List<Turista> getTurista() {
         return turistaRepository.findAll();
     }
+
+    @Override
+    public Optional<Turista> findTuristaByNombre(String nombre) {
+        return turistaRepository.findTuristaByNombre(nombre);
+    }
 }

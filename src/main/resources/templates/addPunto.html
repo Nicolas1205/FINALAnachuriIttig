@@ -10,19 +10,24 @@
 </head>
 
 <body>
-  <!-- <div th:replace="~{fragments/navbar :: navbar}"></div> -->
+   <div th:replace="~{fragments/navbar :: navbar}"></div>
 
   <!-- Main -->
   <main class="container">
     <div>
-      <form action="#" th:action="@{/addPunto}" th:object="${punto}" method="post">
+      <form action="#" th:action="@{/addPunto}" th:object="${punto}" method="post" enctype="multipart/form-data">
         <label for="nombre"> Nombre </label>
         <input th:field="*{nombre}" type="text" name="nombre" required>
-				
-        <label for="turista"> Turista </label>
-        <input th:field="*{turista.turistaId}" name="turista" required>
+
+        <label for="descripcion"> Descripcion </label>
+        <textarea th:field="*{descripcion}" required></textarea>
+
+        <label for="file"> URL de imagen </label>
+        <input type="file" id="file" name="file" required>
 				
         <input type="submit" value="Crear">
+
+        <input style="display: none" type="text" th:field="*{turista.turistaId}" name="turista">
       </form>
     </div>
   </main>

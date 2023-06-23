@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="../static/css/global.css" th:href="@{/css/global.css}">
 </head>
 <body>
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+
 <main class="container">
     <form th:action="@{/login}" method="post">
         <h1>Login</h1>

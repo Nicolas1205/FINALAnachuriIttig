@@ -28,6 +28,18 @@ public class Turista {
     @Column(name = "turista_id")
     private int turistaId;
 
+    @Override
+    public String toString() {
+        return "Turista{" +
+                "turistaId=" + turistaId +
+                ", nombre='" + nombre + '\'' +
+                ", password='" + password + '\'' +
+                ", rol='" + rol + '\'' +
+                ", estado=" + estado +
+                '}';
+    }
+
+    @Column(unique = true)
     private String nombre;
 
     private String password;
