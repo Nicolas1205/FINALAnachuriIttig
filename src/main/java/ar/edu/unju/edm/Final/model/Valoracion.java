@@ -6,6 +6,7 @@ import jakarta.persistence.MapsId;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.JoinColumn;
+import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -29,6 +30,8 @@ public class Valoracion {
     @JoinColumn(name = "punto_id")
     public Punto punto;
 
+    @Size(min=0, max=5)
+    @NotNull
     public int rating;
 
     public Valoracion(int rating) {

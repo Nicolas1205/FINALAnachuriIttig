@@ -51,7 +51,7 @@
                     <div th:unless="${punto.getUserRating(turista.getTuristaId())}">
                         <form th:object="${valoracion}" th:action="@{addValoracion(puntoId=${punto.puntoId})}"
                               method="post">
-                            <input type="text" name="rate" th:field="*{rating}"/>
+                            <input type="text" name="rate" th:field="*{rating}" minlength="0" maxlength="5"/>
                             <label for="rate"> </label>
                             <button> Rate</button>
                         </form>

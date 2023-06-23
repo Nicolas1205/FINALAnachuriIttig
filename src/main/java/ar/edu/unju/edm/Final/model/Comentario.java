@@ -7,6 +7,7 @@ import jakarta.persistence.Table;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.JoinColumn;
+import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.NoArgsConstructor;
@@ -31,6 +32,7 @@ public class Comentario {
     @JoinColumn(name = "punto_id")
     public Punto punto;
 
+    @NotBlank
     public String titulo;
     public String descripcion;
 

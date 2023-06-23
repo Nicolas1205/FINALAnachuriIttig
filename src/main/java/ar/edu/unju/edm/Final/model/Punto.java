@@ -10,6 +10,8 @@ import java.util.List;
 
 import ar.edu.unju.edm.Final.model.Turista;
 import ar.edu.unju.edm.Final.model.Valoracion;
+import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "puntos")
@@ -21,6 +23,9 @@ public class Punto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int puntoId;
+
+    @NotNull
+    @Size(min=1, max=50)
     private String nombre;
     private String descripcion;
 
@@ -43,7 +48,6 @@ public class Punto {
     }
 
     public Integer getUserRating(Integer turistaId) {
-        System.out.println(turistaId);
         return
                 valoraciones.stream().filter(valoracion -> valoracion.getTurista().getTuristaId() == turistaId)
                         .map(Valoracion::getRating).findFirst().orElse(null);

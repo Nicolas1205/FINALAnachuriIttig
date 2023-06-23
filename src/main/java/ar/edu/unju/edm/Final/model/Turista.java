@@ -7,6 +7,7 @@ import jakarta.persistence.Table;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Column;
+import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.NoArgsConstructor;
@@ -40,10 +41,15 @@ public class Turista {
     }
 
     @Column(unique = true)
+    @NotNull
+    @NotBlank
     private String nombre;
 
+    @NotNull
+    @NotBlank
     private String password;
 
+    @NotBlank
     private String rol;
 
     private boolean estado;
