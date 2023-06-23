@@ -19,16 +19,15 @@ public class Autenticacion implements AuthenticationSuccessHandler {
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         var auths = authentication.getAuthorities();
-        redirectStrategy.sendRedirect(request, response, "/puntos");
-//        for (var x : auths) {
-//            if (x.getAuthority().equals("ADMIN")) {
-//                redirectStrategy.sendRedirect(request, response, "/user");
-//                return;
-//            } else if (x.getAuthority().equals("USUARIO")) {
-//                redirectStrategy.sendRedirect(request, response, "/puntos");
-//                return;
-//            }
-//        }
+        for (var x : auths) {
+            if (x.getAuthority().equals("ADMIN")) {
+                redirectStrategy.sendRedirect(request, response, "/addTurista");
+                return;
+            } else if (x.getAuthority().equals("USUARIO")) {
+                redirectStrategy.sendRedirect(request, response, "/puntos");
+                return;
+            }
+        }
     }
 
 }
