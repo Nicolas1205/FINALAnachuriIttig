@@ -15,7 +15,7 @@ import java.io.IOException;
 @Component
 public class Autenticacion implements AuthenticationSuccessHandler {
 
-    private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
+    private final RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         var auths = authentication.getAuthorities();
@@ -24,7 +24,7 @@ public class Autenticacion implements AuthenticationSuccessHandler {
                 redirectStrategy.sendRedirect(request, response, "/addTurista");
                 return;
             } else if (x.getAuthority().equals("USUARIO")) {
-                redirectStrategy.sendRedirect(request, response, "/puntos");
+                redirectStrategy.sendRedirect(request, response, "/");
                 return;
             }
         }

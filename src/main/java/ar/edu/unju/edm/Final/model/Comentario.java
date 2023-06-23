@@ -32,7 +32,7 @@ public class Comentario {
     @JoinColumn(name = "punto_id")
     public Punto punto;
 
-    @NotBlank
+    @NotBlank(message = "no debe estar en blanco")
     public String titulo;
     public String descripcion;
 

@@ -41,15 +41,15 @@ public class Turista {
     }
 
     @Column(unique = true)
-    @NotNull
-    @NotBlank
+    @NotNull(message = "debe especificar un nombre")
+    @NotBlank(message = "no debe estar en blanco")
     private String nombre;
 
-    @NotNull
-    @NotBlank
+    @NotNull(message = "debe especificar una contraseña")
+    @NotBlank(message = "no debe estar en blanco")
     private String password;
 
-    @NotBlank
+    @NotBlank(message = "debe especificar un rol")
     private String rol;
 
     private boolean estado;

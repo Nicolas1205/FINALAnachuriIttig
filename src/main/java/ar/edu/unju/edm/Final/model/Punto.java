@@ -24,11 +24,12 @@ public class Punto {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int puntoId;
 
-    @NotNull
-    @Size(min=1, max=50)
+    @NotNull(message = "debe especificar un nombre")
+    @Size(min=1, max=50, message = "debe tener entre 1 y 50 caracteres")
     private String nombre;
     private String descripcion;
 
+    @NotNull(message = "debe especificar una imagen")
     @Lob
     @Column(columnDefinition = "TEXT")
     private String imagenUrl;

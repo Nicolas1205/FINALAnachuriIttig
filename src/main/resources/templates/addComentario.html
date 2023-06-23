@@ -13,12 +13,13 @@
    <div th:replace="~{fragments/navbar :: navbar}"></div>
 
   <!-- Main -->
-	<div th:value="${punto.nombre}"/>
   <main class="container">
+    <h1 th:text="${'Comentario: ' + punto.nombre}">Comentario: </h1>
     <div>
       <form action="#" th:action="@{/addComentario(puntoId=${punto.puntoId})}" th:object="${comentario}" method="post">
         <label for="titulo"> Titulo </label>
-        <input th:field="*{titulo}" type="text" name="titulo" required>
+        <input th:field="*{titulo}" type="text" name="titulo" th:aria-invalid="${#fields.hasErrors('titulo') ? 'true' : ''}" aria-describedby="titulo-error" required>
+        <small id="titulo-error" th:if="${#fields.hasErrors('titulo')}" th:errors="*{titulo}"></small>
         <label for="descripcion"> Descripcion </label>
         <textarea th:field="*{descripcion}" name="descripcion"></textarea>
         <input type="submit" value="Crear">
