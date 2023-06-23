@@ -1,14 +1,17 @@
 package ar.edu.unju.edm.Final.controller;
 
+import ar.edu.unju.edm.Final.TuristaDetails;
 import ar.edu.unju.edm.Final.model.Turista;
 import ar.edu.unju.edm.Final.service.ITuristaService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Optional;
@@ -26,8 +29,10 @@ public class TuristaController {
     }
 
     @PostMapping("/addTurista")
-    public String getTurista(@ModelAttribute("turista") Turista turista) {
-        System.out.println(turista);
+    public String getTurista(@Valid Turista turista, BindingResult result) {
+        if (result.hasErrors()) {
+            return "addTurista";
+        }
         var bcrypt = new BCryptPasswordEncoder();
         var fTurista = turistaService.findTuristaByNombre(turista.getNombre());
         if (fTurista.isPresent()) {
@@ -46,21 +51,10 @@ public class TuristaController {
 
 
     @GetMapping("/turista")
-    public String getTurista(@RequestParam("turista_id") Integer turistaId, Model model) {
-        //var turista = turistaId.map(turistaService::getTurista).orElse(Optional.of(null));
-        // TODO ERROR HANDLER Optional
-        var turista = turistaService.getTurista(turistaId).orElse(new Turista());
-        //var turista = opt_turista.get();
+    public String getTurista(@RequestParam("turista_id") Optional<Integer> turistaId, Model model, @AuthenticationPrincipal TuristaDetails details) {
+        var turista = turistaService.getTurista(turistaId.orElse(details.getTurista().getTuristaId())).orElseThrow();
         model.addAttribute("turista", turista);
         return "turista.html";
     }
-
-		/*
-		@DeleteMapping("/deletepunto")
-		public String deletePunto(@RequestParam("codigo") Integer codigo) {
-				turistaService.deleteTurista(codigo);
-				return "redirect:/puntos";
-		}
-		*/
 
 }

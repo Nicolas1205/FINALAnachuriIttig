@@ -4,7 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Navbar</title>
-    <link rel="stylesheet" href="../../static/css/pico.min.css" th:href="@{/css/pico.min.css}" />
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2.0.0-alpha1/css/pico.min.css"/>
     <link rel="stylesheet" href="../../static/css/global.css" th:href="@{/css/global.css}">
 </head>
 <body>
@@ -33,11 +34,18 @@
         </li>
     </ul>
     <ul sec:authorize="isAuthenticated()">
-        <li sec:authentication="name">Nombre de usuario</li>
         <li>
             <a
-                href="../login.html"
-                th:href="@{/logout}"
+                    href="../turista.html"
+                    th:href="@{/turista}"
+                    class="contrast"
+                    sec:authentication="name"
+            >Nombre de usuario</a>
+        </li>
+        <li>
+            <a
+                    href="../login.html"
+                    th:href="@{/logout}"
             >
                 Logout
             </a>

@@ -13,5 +13,5 @@ import java.util.Optional;
 public interface TuristaRepository extends ListCrudRepository<Turista, Integer> {
 
     @Query("SELECT u FROM Turista u WHERE u.nombre = :nombre")
-    public Optional<Turista> findTuristaByNombre(@Param("nombre") String nombre);
+    Optional<Turista> findTuristaByNombre(@Param("nombre") String nombre);
 }

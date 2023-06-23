@@ -7,6 +7,7 @@ import jakarta.persistence.Table;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Column;
+import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.NoArgsConstructor;
@@ -15,7 +16,6 @@ import java.util.Set;
 import java.util.List;
 
 import ar.edu.unju.edm.Final.model.Punto;
-import lombok.ToString;
 
 @Entity
 @Table(name = "turistas")
@@ -40,10 +40,15 @@ public class Turista {
     }
 
     @Column(unique = true)
+    @NotNull(message = "debe especificar un nombre")
+    @NotBlank(message = "no debe estar en blanco")
     private String nombre;
 
+    @NotNull(message = "debe especificar una contraseña")
+    @NotBlank(message = "no debe estar en blanco")
     private String password;
 
+    @NotBlank(message = "debe especificar un rol")
     private String rol;
 
     private boolean estado;
@@ -58,7 +63,7 @@ public class Turista {
     @OneToMany(mappedBy = "turista")
     private Set<Valoracion> valoraciones;
 
-    public Turista(String nombre) {
+    public Turista(@NotNull String nombre) {
         this.nombre = nombre;
     }
 }

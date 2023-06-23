@@ -2,17 +2,17 @@ package ar.edu.unju.edm.Final.controller;
 
 import ar.edu.unju.edm.Final.TuristaDetails;
 import ar.edu.unju.edm.Final.model.Comentario;
-import ar.edu.unju.edm.Final.model.Turista;
 import ar.edu.unju.edm.Final.service.IComentarioService;
 import ar.edu.unju.edm.Final.service.IPuntoService;
 import ar.edu.unju.edm.Final.service.ITuristaService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import ar.edu.unju.edm.Final.model.Punto;
@@ -38,9 +38,15 @@ public class ComentarioController {
 
     @PostMapping("/addComentario")
     public String postComentario(@RequestParam("puntoId") Integer puntoId,
-                                 @ModelAttribute("comentario") Comentario comentario,
-                                 @AuthenticationPrincipal TuristaDetails details) {
+                                 @Valid Comentario comentario,
+                                 BindingResult bindingResult,
+                                 @AuthenticationPrincipal TuristaDetails details,
+                                 Model model) {
         var punto = puntoService.getPunto(puntoId).orElse(new Punto());
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("punto", punto);
+            return "addComentario";
+        }
         var turista = turistaService.getTurista(details.getTurista().getTuristaId()).orElseThrow();
 
         comentario.setTurista(turista);

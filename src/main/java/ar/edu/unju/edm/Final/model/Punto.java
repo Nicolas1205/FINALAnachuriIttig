@@ -10,6 +10,8 @@ import java.util.List;
 
 import ar.edu.unju.edm.Final.model.Turista;
 import ar.edu.unju.edm.Final.model.Valoracion;
+import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "puntos")
@@ -21,9 +23,13 @@ public class Punto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int puntoId;
+
+    @NotNull(message = "debe especificar un nombre")
+    @Size(min = 1, max = 50, message = "debe tener entre 1 y 50 caracteres")
     private String nombre;
     private String descripcion;
 
+    @NotNull(message = "debe especificar una imagen")
     @Lob
     @Column(columnDefinition = "TEXT")
     private String imagenUrl;
@@ -38,12 +44,11 @@ public class Punto {
     @OneToMany(mappedBy = "punto")
     private List<Valoracion> valoraciones;
 
-    public Punto(String nombre) {
+    public Punto(@NotNull String nombre) {
         this.nombre = nombre;
     }
 
     public Integer getUserRating(Integer turistaId) {
-        System.out.println(turistaId);
         return
                 valoraciones.stream().filter(valoracion -> valoracion.getTurista().getTuristaId() == turistaId)
                         .map(Valoracion::getRating).findFirst().orElse(null);

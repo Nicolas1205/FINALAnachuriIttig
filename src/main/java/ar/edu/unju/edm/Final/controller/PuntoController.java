@@ -7,6 +7,7 @@ import ar.edu.unju.edm.Final.model.Valoracion;
 import ar.edu.unju.edm.Final.service.IPuntoService;
 import ar.edu.unju.edm.Final.service.ITuristaService;
 import ar.edu.unju.edm.Final.service.IValoracionService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -19,7 +20,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.security.Principal;
 import java.util.Base64;
 import java.util.Objects;
 import java.util.Optional;
@@ -46,7 +46,11 @@ public class PuntoController {
     }
 
     @PostMapping(value = "/addPunto", consumes = "multipart/form-data")
-    public String postPuntoDeInteres(@ModelAttribute("punto") Punto punto, @RequestParam("file") MultipartFile[] archivo, Model model) {
+    public String postPuntoDeInteres(@Valid Punto punto, BindingResult result, @RequestParam("file") MultipartFile[] archivo, Model model, @AuthenticationPrincipal TuristaDetails details) {
+        if (result.hasErrors()) {
+            return "addPunto";
+        }
+
         try {
             byte[] contenido = archivo[0].getBytes();
             String base64 = Base64.getEncoder().encodeToString(contenido);
