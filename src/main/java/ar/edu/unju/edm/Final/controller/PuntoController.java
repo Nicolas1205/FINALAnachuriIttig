@@ -2,7 +2,6 @@ package ar.edu.unju.edm.Final.controller;
 
 import ar.edu.unju.edm.Final.TuristaDetails;
 import ar.edu.unju.edm.Final.model.Punto;
-import ar.edu.unju.edm.Final.model.Turista;
 import ar.edu.unju.edm.Final.model.Valoracion;
 import ar.edu.unju.edm.Final.service.IPuntoService;
 import ar.edu.unju.edm.Final.service.ITuristaService;
@@ -14,7 +13,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -60,7 +58,7 @@ public class PuntoController {
             String base64 = Base64.getEncoder().encodeToString(contenido);
             punto.setImagenUrl("data:" + archivo[0].getContentType() + ";base64," + base64);
         } catch (Exception e) {
-            model.addAttribute("subirHabitacionErrorMessage", e.getMessage());
+            model.addAttribute("subirPuntoErrorMessage", e.getMessage());
         }
 
         puntoService.addPunto(punto);

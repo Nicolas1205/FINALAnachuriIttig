@@ -11,7 +11,6 @@ import ar.edu.unju.edm.Final.model.Punto;
 import java.util.List;
 
 
-
 @Repository
 public interface PuntoRepository extends ListCrudRepository<Punto, Integer> {
     @Query("SELECT NEW ar.edu.unju.edm.Final.util.PuntoWithAverage(p, AVG(v.rating)) " +

@@ -2,7 +2,6 @@ package ar.edu.unju.edm.Final.model;
 
 import jakarta.persistence.*;
 import lombok.Getter;
-import lombok.ToString;
 import lombok.Setter;
 import lombok.NoArgsConstructor;
 

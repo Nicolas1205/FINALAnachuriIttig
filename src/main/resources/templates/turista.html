@@ -21,17 +21,17 @@
 
 <main class="container">
     <div>
-        <h1 th:text="${turista.nombre}"/>
+        <h1 th:text="${turista.nombre}"></h1>
     </div>
     <div>
         <section class="grid items">
             <article th:each="punto: ${turista.puntos}">
                 <header>
                     <hgroup>
-                        <h1 th:text="${punto.nombre}"/>
+                        <h1 th:text="${punto.nombre}"></h1>
                     </hgroup>
                 </header>
-                <p th:text="${punto.descripcion}"/>
+                <p th:text="${punto.descripcion}"></p>
             </article>
         </section>
 

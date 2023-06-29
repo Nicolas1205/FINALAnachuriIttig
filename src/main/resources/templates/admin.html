@@ -31,8 +31,9 @@
                 <td th:text="*{nombre}">Nombre</td>
                 <td th:text="*{rol}">Rol</td>
                 <td>
-                    <form th:unless="*{turistaId} eq ${turistaActual.turistaId}" th:action="@{/deleteTurista(turista_id=*{turistaId})}" method="post">
-                        <button><span class="material-symbols-outlined">delete</span> </button>
+                    <form th:unless="*{turistaId} eq ${turistaActual.turistaId}"
+                          th:action="@{/deleteTurista(turista_id=*{turistaId})}" method="post">
+                        <button><span class="material-symbols-outlined">delete</span></button>
                     </form>
                 </td>
             </tr>
@@ -65,17 +66,18 @@
             <tr th:each="punto : ${puntos}" th:object="${punto}">
                 <td th:text="*{nombre}">Nombre</td>
                 <td th:text="*{descripcion}" class="ellipsis" style="max-width: 40ch">Descripción</td>
-                <td style="max-width: .75rem"><img th:src="*{imagenUrl}" alt="imagen de punto" th:alt="'imagen ' + *{nombre}"></td>
+                <td style="max-width: .75rem"><img th:src="*{imagenUrl}" alt="imagen de punto"
+                                                   th:alt="'imagen ' + *{nombre}"></td>
                 <td th:text="*{turista.nombre}">Creador</td>
                 <td>
                     <form th:action="@{/deletePunto(punto_id=*{puntoId})}" method="post">
-                        <button><span class="material-symbols-outlined">delete</span> </button>
+                        <button><span class="material-symbols-outlined">delete</span></button>
                     </form>
-<!--                    <form th:action="@{/addPunto(punto_id=*{puntoId})}" method="get">-->
+                    <!--                    <form th:action="@{/addPunto(punto_id=*{puntoId})}" method="get">-->
                     <a th:href="@{/addPunto(punto_id=*{puntoId})}">
-                        <button type="button"><span class="material-symbols-outlined">edit</span> </button>
+                        <button type="button"><span class="material-symbols-outlined">edit</span></button>
                     </a>
-<!--                    </form>-->
+                    <!--                    </form>-->
                 </td>
             </tr>
             <tr>

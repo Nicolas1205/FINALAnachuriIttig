@@ -1,6 +1,5 @@
 package ar.edu.unju.edm.Final;
 
-import ar.edu.unju.edm.Final.repository.PuntoRepository;
 import ar.edu.unju.edm.Final.service.IPuntoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -18,7 +17,7 @@ public class FinalAnachuriIttigApplication implements CommandLineRunner {
     }
 
     @Override
-    public void run(String... args) throws Exception {
-        System.out.println(puntoService.getPuntosWithAverage());
+    public void run(String... args) {
+//        System.out.println(puntoService.getPuntosWithAverage());
     }
 }
