@@ -46,7 +46,13 @@ public class TuristaController {
             turista.setEstado(true);
             turistaService.addTurista(turista);
         }
-        return "redirect:/puntos";
+        return "redirect:/admin";
+    }
+
+    @PostMapping("/deleteTurista")
+    public String deleteTurista(@RequestParam("turista_id") Integer id) {
+        turistaService.deleteTurista(id);
+        return "redirect:/admin";
     }
 
 

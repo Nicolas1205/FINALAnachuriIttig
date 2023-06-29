@@ -4,6 +4,19 @@
  font-weight:400
 }
 
+.material-symbols-outlined {
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 48;
+  vertical-align: middle;
+}
+
+.filled-symbols {
+    font-variation-settings: 'FILL' 1;
+}
+
 :root {
     --pico-font-family-monospace: ibm_vga, monospaced;
     --pico-font-family: var(--pico-font-family-monospace);
@@ -36,4 +49,14 @@ nav {
 
 article {
     border: 2px solid white;
+}
+
+table button {
+    --pico-form-element-spacing-vertical: 0.2rem;
+}
+
+.ellipsis {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }

@@ -1,6 +1,8 @@
 package ar.edu.unju.edm.Final.service;
 
 import ar.edu.unju.edm.Final.model.Punto;
+import ar.edu.unju.edm.Final.model.Turista;
+import ar.edu.unju.edm.Final.util.PuntoWithAverage;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -15,4 +17,7 @@ public interface IPuntoService {
     void deletePunto(int codigo);
 
     List<Punto> getPuntos();
+
+    List<PuntoWithAverage> getPuntosWithAverage(Turista turista);
+    List<PuntoWithAverage> getPuntosWithAverage();
 }

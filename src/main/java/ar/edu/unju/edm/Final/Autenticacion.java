@@ -1,6 +1,5 @@
 package ar.edu.unju.edm.Final;
 
-import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.core.Authentication;
@@ -21,7 +20,7 @@ public class Autenticacion implements AuthenticationSuccessHandler {
         var auths = authentication.getAuthorities();
         for (var x : auths) {
             if (x.getAuthority().equals("ADMIN")) {
-                redirectStrategy.sendRedirect(request, response, "/addTurista");
+                redirectStrategy.sendRedirect(request, response, "/admin");
                 return;
             } else if (x.getAuthority().equals("USUARIO")) {
                 redirectStrategy.sendRedirect(request, response, "/");

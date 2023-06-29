@@ -29,8 +29,8 @@
             <label for="rol">Rol</label>
             <select th:field="*{rol}" required th:aria-invalid="${#fields.hasErrors('rol') ? 'true' : ''}"
                     aria-describedby="rol-error">
-                <option value="ADMIN">ADMIN</option>
                 <option value="USUARIO">USUARIO</option>
+                <option value="ADMIN">ADMIN</option>
             </select>
             <small id="rol-error" th:if="${#fields.hasErrors('rol')}" th:errors="*{rol}"></small>
 
