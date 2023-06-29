@@ -16,6 +16,7 @@
 <main class="container">
     <div>
         <form action="#" th:action="@{/addPunto}" th:object="${punto}" method="post" enctype="multipart/form-data">
+            <input readonly style="display: none;" aria-hidden="true" th:field="*{puntoId}">
             <label for="nombre"> Nombre </label>
             <input th:field="*{nombre}" type="text" name="nombre" required
                    th:aria-invalid="${#fields.hasErrors('nombre') ? 'true' : ''}" aria-describedby="nombre-error">
@@ -32,7 +33,7 @@
 
             <input type="submit" value="Crear">
 
-            <input style="display: none" type="text" th:field="*{turista.turistaId}" name="turista">
+            <input style="display: none" readonly aria-hidden="true" th:field="*{turista.turistaId}" name="turista">
         </form>
     </div>
 </main>

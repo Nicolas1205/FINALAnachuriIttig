@@ -38,10 +38,10 @@ public class Punto {
     @JoinColumn(name = "turista_id")//, nullable=false)
     private Turista turista;
 
-    @OneToMany(mappedBy = "punto")
+    @OneToMany(mappedBy = "punto", cascade = CascadeType.REMOVE)
     private List<Comentario> comentarios;
 
-    @OneToMany(mappedBy = "punto")
+    @OneToMany(mappedBy = "punto", cascade = CascadeType.REMOVE)
     private List<Valoracion> valoraciones;
 
     public Punto(@NotNull String nombre) {

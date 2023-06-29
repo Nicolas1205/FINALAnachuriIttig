@@ -35,7 +35,7 @@ public class PuntoController {
 
 
     @GetMapping("/addPunto")
-    public String getPuntoDeInteres(@RequestParam("codigo") Optional<Integer> codigo, Model model, @AuthenticationPrincipal TuristaDetails details) {
+    public String getPuntoDeInteres(@RequestParam("punto_id") Optional<Integer> codigo, Model model, @AuthenticationPrincipal TuristaDetails details) {
         Objects.requireNonNull(details);
         var punto = codigo.flatMap(puntoService::getPunto).orElse(new Punto());
         if (Objects.isNull(punto.getTurista())) {
@@ -79,8 +79,8 @@ public class PuntoController {
         return "puntos.html";
     }
 
-    @DeleteMapping("/deletePunto")
-    public String deletePunto(@RequestParam("codigo") Integer codigo) {
+    @PostMapping("/deletePunto")
+    public String deletePunto(@RequestParam("punto_id") Integer codigo) {
         puntoService.deletePunto(codigo);
         return "redirect:/puntos";
     }

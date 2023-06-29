@@ -21,7 +21,7 @@ public class Autenticacion implements AuthenticationSuccessHandler {
         var auths = authentication.getAuthorities();
         for (var x : auths) {
             if (x.getAuthority().equals("ADMIN")) {
-                redirectStrategy.sendRedirect(request, response, "/addTurista");
+                redirectStrategy.sendRedirect(request, response, "/admin");
                 return;
             } else if (x.getAuthority().equals("USUARIO")) {
                 redirectStrategy.sendRedirect(request, response, "/");

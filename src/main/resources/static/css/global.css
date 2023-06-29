@@ -50,3 +50,13 @@ nav {
 article {
     border: 2px solid white;
 }
+
+table button {
+    --pico-form-element-spacing-vertical: 0.2rem;
+}
+
+.ellipsis {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

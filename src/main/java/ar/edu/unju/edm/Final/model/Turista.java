@@ -1,12 +1,6 @@
 package ar.edu.unju.edm.Final.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Table;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Column;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -53,14 +47,14 @@ public class Turista {
 
     private boolean estado;
 
-    @OneToMany(mappedBy = "turista")
+    @OneToMany(mappedBy = "turista", cascade = CascadeType.REMOVE)
     private List<Punto> puntos;
 
 
-    @OneToMany(mappedBy = "turista")
+    @OneToMany(mappedBy = "turista", cascade = CascadeType.REMOVE)
     private List<Comentario> comentarios;
 
-    @OneToMany(mappedBy = "turista")
+    @OneToMany(mappedBy = "turista", cascade = CascadeType.REMOVE)
     private Set<Valoracion> valoraciones;
 
     public Turista(@NotNull String nombre) {
