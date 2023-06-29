@@ -18,7 +18,6 @@ import jakarta.validation.constraints.NotNull;
 @Getter
 @Setter
 @NoArgsConstructor
-@ToString
 public class Punto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,11 +26,12 @@ public class Punto {
     @NotNull(message = "debe especificar un nombre")
     @Size(min = 1, max = 50, message = "debe tener entre 1 y 50 caracteres")
     private String nombre;
-    private String descripcion;
-
-    @NotNull(message = "debe especificar una imagen")
     @Lob
     @Column(columnDefinition = "TEXT")
+    private String descripcion;
+
+    @Lob
+    @Column(columnDefinition = "MEDIUMTEXT")
     private String imagenUrl;
 
     @ManyToOne
@@ -48,9 +48,13 @@ public class Punto {
         this.nombre = nombre;
     }
 
-    public Integer getUserRating(Integer turistaId) {
-        return
-                valoraciones.stream().filter(valoracion -> valoracion.getTurista().getTuristaId() == turistaId)
-                        .map(Valoracion::getRating).findFirst().orElse(null);
+    @Override
+    public String toString() {
+        return "Punto{" +
+                "puntoId=" + puntoId +
+                ", nombre='" + nombre + '\'' +
+                ", descripcion='" + descripcion + '\'' +
+                ", imagenUrl='" + imagenUrl + '\'' +
+                '}';
     }
 }

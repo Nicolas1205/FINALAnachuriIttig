@@ -12,15 +12,16 @@
 <nav th:fragment="navbar" class="container-fluid">
     <ul>
         <li>
-            <a href="../index.html" th:href="@{/}" class="contrast"><strong>Turismo</strong></a>
+            <!--            <a href="../index.html" th:href="@{/}" class="contrast"><strong>Turismo</strong></a>-->
+            <span class="contrast"><strong>Turismo</strong></span>
         </li>
         <li>
             <a
                     href="../puntos.html"
-                    th:href="@{/puntos}"
+                    th:href="@{/}"
                     class="secondary"
             >
-                Puntos
+                Puntos de interés
             </a>
         </li>
         <li sec:authorize="hasAuthority('ADMIN')">
@@ -47,7 +48,18 @@
                     href="../login.html"
                     th:href="@{/logout}"
             >
-                Logout
+                Cerrar sesión
+            </a>
+        </li>
+    </ul>
+    <ul sec:authorize="!isAuthenticated()">
+        <li>
+            <a
+                    class="contrast"
+                    href="../login.html"
+                    th:href="@{/login}"
+            >
+                Iniciar sesión
             </a>
         </li>
     </ul>

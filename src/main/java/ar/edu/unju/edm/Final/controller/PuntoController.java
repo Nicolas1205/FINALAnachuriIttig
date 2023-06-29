@@ -38,15 +38,19 @@ public class PuntoController {
     public String getPuntoDeInteres(@RequestParam("codigo") Optional<Integer> codigo, Model model, @AuthenticationPrincipal TuristaDetails details) {
         Objects.requireNonNull(details);
         var punto = codigo.flatMap(puntoService::getPunto).orElse(new Punto());
-        var turista = turistaService.getTurista(details.getTurista().getTuristaId()).orElseThrow();
-        punto.setTurista(turista);
-        turista.getPuntos().add(punto);
+        if (Objects.isNull(punto.getTurista())) {
+            var turista = turistaService.getTurista(details.getTurista().getTuristaId()).orElseThrow();
+            punto.setTurista(turista);
+            turista.getPuntos().add(punto);
+        }
         model.addAttribute("punto", punto);
         return "addPunto.html";
     }
 
     @PostMapping(value = "/addPunto", consumes = "multipart/form-data")
     public String postPuntoDeInteres(@Valid Punto punto, BindingResult result, @RequestParam("file") MultipartFile[] archivo, Model model, @AuthenticationPrincipal TuristaDetails details) {
+        Objects.requireNonNull(details);
+        assert punto.getTurista().getTuristaId() == details.getTurista().getTuristaId();
         if (result.hasErrors()) {
             return "addPunto";
         }
@@ -54,7 +58,7 @@ public class PuntoController {
         try {
             byte[] contenido = archivo[0].getBytes();
             String base64 = Base64.getEncoder().encodeToString(contenido);
-            punto.setImagenUrl("data," + archivo[0].getContentType() + ";base64," + base64);
+            punto.setImagenUrl("data:" + archivo[0].getContentType() + ";base64," + base64);
         } catch (Exception e) {
             model.addAttribute("subirHabitacionErrorMessage", e.getMessage());
         }
@@ -63,18 +67,19 @@ public class PuntoController {
         return "redirect:/puntos";
     }
 
-    @GetMapping("/puntos")
+    @GetMapping({"/", "/puntos"})
     public String getPuntos(Model model, @AuthenticationPrincipal TuristaDetails userDetails) {
-        var puntos = puntoService.getPuntos();
-        var turista = Optional.ofNullable(userDetails.getTurista()).orElse(new Turista());
-        System.out.println(userDetails.getAuthorities());
+        var turista = Optional.ofNullable(userDetails)
+                .flatMap(t -> turistaService.getTurista(t.getTurista().getTuristaId()))
+                .orElse(null);
+        var puntos = puntoService.getPuntosWithAverage(turista);
         model.addAttribute("turista", turista);
         model.addAttribute("puntos", puntos);
         model.addAttribute("valoracion", new Valoracion());
         return "puntos.html";
     }
 
-    @DeleteMapping("/deletepunto")
+    @DeleteMapping("/deletePunto")
     public String deletePunto(@RequestParam("codigo") Integer codigo) {
         puntoService.deletePunto(codigo);
         return "redirect:/puntos";
@@ -91,7 +96,8 @@ public class PuntoController {
     public String postValoracion(@RequestParam("puntoId") Integer puntoId,
                                  @ModelAttribute("valoracion") Valoracion valoracion,
                                  @AuthenticationPrincipal TuristaDetails details) {
-
+        Objects.requireNonNull(details);
+        assert valoracion.getTurista().getTuristaId() == details.getTurista().getTuristaId();
         var punto = puntoService.getPunto(puntoId).orElse(new Punto());
         var turista = turistaService.getTurista(details.getTurista().getTuristaId()).orElseThrow();
         valoracion.setPunto(punto);

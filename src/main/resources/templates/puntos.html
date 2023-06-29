@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="es" xmlns:th="https://www.thymeleaf.org" data-theme="dark">
+<html lang="es" xmlns:th="https://www.thymeleaf.org" data-theme="dark"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 
 <head>
     <title>Puntos</title>
@@ -19,54 +20,71 @@
 <!-- MAIN -->
 
 <main class="container">
-    <div>
-        <section class="grid items">
-            <article th:each="punto: ${puntos}">
-                <header>
-                    <hgroup>
-                        <h3 th:text="${punto.nombre}"/>
-                        <h3 th:text="${punto.turista.nombre}"/>
-                    </hgroup>
+    <section class="controls-container" sec:authorize="isAuthenticated()">
+        <a role="button" href="/addPunto">
+            <span class="material-symbols-outlined">
+                add_circle
+            </span> Crear punto de interés
+        </a>
+        <!--        <a role="button" href="/"> Volver al Inicio </a>-->
+    </section>
 
-                    <img th:src="${punto.imagenUrl}" th:alt="${punto.nombre}" alt="Imagen punto">
+    <section th:if="${#lists.isEmpty(puntos)}">
+        <hgroup>
+            <h1>Listado vacío</h1>
+            <h6>Puede agregar un punto de interés si tiene una sesión iniciada</h6>
+        </hgroup>
+    </section>
 
-                </header>
+    <section class="grid items">
+        <article th:each="puntoWithAvg: ${puntos}" th:with="punto=${puntoWithAvg.punto}">
+            <header>
+                <hgroup>
+                    <h3 th:text="${punto.nombre}"></h3>
+                    <h3 th:text="${punto.turista.nombre}"></h3>
+                </hgroup>
 
-                <p th:text="${punto.descripcion}">
-                    Descripción
+                <img th:src="${punto.imagenUrl}" th:alt="${punto.nombre}" alt="Imagen punto">
+
+            </header>
+
+            <p th:text="${punto.descripcion}">
+                Descripción
+            </p>
+
+            <footer>
+                <p>
+                        <span class="material-symbols-outlined filled-symbols" style="vertical-align: middle;">
+                            star_rate
+                        </span> <span th:text="${puntoWithAvg.average}?: '--'">
+                            3.0
+                        </span>
                 </p>
 
-                <footer>
-                    <div role="group">
-                        <form th:id="${'form1-' + punto.puntoId}" th:action="@{/comentarios(puntoId=${punto.puntoId})}"
-                              method="get" style="display: none;">
-                            <input name="puntoId" th:value="${punto.puntoId}">
-                        </form>
-                        <button th:form="${'form1-' + punto.puntoId}"><span> Comentarios </span></button>
-                    </div>
+                <div th:if="${puntoWithAvg.turistaRating}"
+                     th:text="'Su valoración: ' + ${puntoWithAvg.turistaRating}">Su valoración:
+                </div>
 
-                    <div th:if="${punto.getUserRating(turista.getTuristaId())}"
-                         th:text="${punto.getUserRating(turista.getTuristaId())}"/>
+                <section sec:authorize="isAuthenticated()" th:unless="${puntoWithAvg.turistaRating}">
+                    <form th:object="${valoracion}" th:action="@{addValoracion(puntoId=${punto.puntoId})}"
+                          method="post">
+                        <input type="number" name="rate" th:field="*{rating}" min="0" max="5"/>
+                        <button> Agregar valoración</button>
+                    </form>
+                </section>
 
-                    <div th:unless="${punto.getUserRating(turista.getTuristaId())}">
-                        <form th:object="${valoracion}" th:action="@{addValoracion(puntoId=${punto.puntoId})}"
-                              method="post">
-                            <input type="text" name="rate" th:field="*{rating}" minlength="0" maxlength="5"/>
-                            <label for="rate"> </label>
-                            <button> Rate</button>
-                        </form>
-                    </div>
+                <div role="group">
+                    <form th:id="${'form1-' + punto.puntoId}" th:action="@{/comentarios(puntoId=${punto.puntoId})}"
+                          method="get" style="display: none;">
+                        <input name="puntoId" th:value="${punto.puntoId}">
+                    </form>
+                    <button th:form="${'form1-' + punto.puntoId}"><span> Comentarios </span></button>
+                </div>
 
-                </footer>
-            </article>
-        </section>
+            </footer>
+        </article>
+    </section>
 
-    </div>
-
-    <div class="controls-container">
-        <a role="button" href="/addPunto">Cargar puntos</a>
-        <a role="button" href="/"> Volver al Inicio </a>
-    </div>
 </main>
 
 </body>

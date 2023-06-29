@@ -23,7 +23,7 @@ public class WebSecurityConfig {
         httpSecurity
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests((requests) -> requests
-                        .requestMatchers("/", "/login").permitAll()
+                        .requestMatchers("/", "/puntos", "/login").permitAll()
                         .requestMatchers("/css/**", "/fonts/**").permitAll()
                         .requestMatchers("/addTurista").hasAuthority("ADMIN")
                         .anyRequest().authenticated()
